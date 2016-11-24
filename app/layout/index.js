@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 
-import A from '../components/component'
+import Header from '../components/header'
 import { APIs } from '../APIs/'
 import _ from 'lodash'
 import { actions } from '../actions'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import About from '../pages/about'
+
+const config = {
+  about: About
+}
 
 function mapStateToProps(states) {
   return { ui: states.reducer };
@@ -27,9 +32,12 @@ class Root extends Component {
   }
 
   render() {
-    const Component = this.props.component
+    const Page = config[this.props.component]
     return (
-      <A/>
+      <div>
+        <Header/>
+        <Page/>
+      </div>
     )
   }
 }

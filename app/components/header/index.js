@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react'
+import reactStyles from 'react-css-modules'
 
 import style from './style'
 
+@reactStyles(style)
 export default class Sample extends Component {
   constructor(props) {
     super(props)
@@ -9,8 +11,8 @@ export default class Sample extends Component {
 
   render() {
     return (
-      <div className={style.hello}>
-        <p>wewe.....</p>
+      <div styleName="header">
+        content is too long
       </div>
     );
   }

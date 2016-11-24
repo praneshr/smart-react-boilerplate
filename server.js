@@ -177,13 +177,13 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(webpackConfig, 'webpackConfig', '/Users/Pranesh/Documents/git/smart-react-boilerplate/server/index.js');
+  __REACT_HOT_LOADER__.register(webpackConfig, 'webpackConfig', 'E:/indix/smart-react-boilerplate/server/index.js');
 
-  __REACT_HOT_LOADER__.register(serverConfig, 'serverConfig', '/Users/Pranesh/Documents/git/smart-react-boilerplate/server/index.js');
+  __REACT_HOT_LOADER__.register(serverConfig, 'serverConfig', 'E:/indix/smart-react-boilerplate/server/index.js');
 
-  __REACT_HOT_LOADER__.register(app, 'app', '/Users/Pranesh/Documents/git/smart-react-boilerplate/server/index.js');
+  __REACT_HOT_LOADER__.register(app, 'app', 'E:/indix/smart-react-boilerplate/server/index.js');
 
-  __REACT_HOT_LOADER__.register(compiler, 'compiler', '/Users/Pranesh/Documents/git/smart-react-boilerplate/server/index.js');
+  __REACT_HOT_LOADER__.register(compiler, 'compiler', 'E:/indix/smart-react-boilerplate/server/index.js');
 }();
 
 ;
