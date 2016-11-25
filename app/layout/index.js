@@ -1,19 +1,18 @@
+import '../globals/styles/index.global.scss'
+
 import React, { Component } from 'react'
 
-import Header from '../components/header'
 import { APIs } from '../APIs/'
+import Header from '../components/header'
 import _ from 'lodash'
 import { actions } from '../actions'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import About from '../pages/about'
-
-const config = {
-  about: About
-}
+import reactStyles from 'react-css-modules'
+import styles from './style'
 
 function mapStateToProps(states) {
-  return { ui: states.reducer };
+  return { ui: states.reducer }
 }
 function mapDispatchToProps(dispatch) {
   return {
@@ -22,27 +21,23 @@ function mapDispatchToProps(dispatch) {
         {},
         actions,
         APIs,
-      ), dispatch), //Add additional actions inthe Object.assign() method
+      ), dispatch),
   }
 }
 
-class Root extends Component {
-  constructor(props) {
-    super(props)
-  }
-
+@connect(mapStateToProps, mapDispatchToProps)
+@reactStyles(styles)
+export default class Root extends Component {
   render() {
-    const Page = config[this.props.component]
     return (
-      <div>
-        <Header/>
-        <Page/>
+      <div id="layout">
+        <Header />
+        <div styleName="page">
+          <div className="container">
+            {React.cloneElement(this.props.children, {...this.props})}
+          </div>
+        </div>
       </div>
     )
   }
 }
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Root)
