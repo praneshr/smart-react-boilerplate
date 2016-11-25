@@ -1,3 +1,4 @@
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HTMLwebpackPlugin from 'html-webpack-plugin'
 import autoprefixer from 'autoprefixer'
 import cwp from 'clean-webpack-plugin'
@@ -10,6 +11,8 @@ const entries = [
   './app/',
 ]
 
+const vendor = new ExtractTextPlugin('vendor.min.css')
+const main = new ExtractTextPlugin('bundle.min.css')
 export default {
   browser: {
     entry: entries,
@@ -23,23 +26,27 @@ export default {
       rules: [
         {
           test: /\.global\.scss$/,
-          loaders: [
-            'style-loader',
-            'css-loader?sourceMap',
-            'sass-loader?sourceMap',
-            'sass-resources-loader',
-            'postcss-loader',
-          ]
+          loader: vendor.extract({
+            fallbackLoader: 'style-loader',
+            loader: [
+              'css-loader?minimize',
+              'sass-loader',
+              'sass-resources-loader',
+              'postcss-loader',
+            ]
+          }),
         },
         {
           test: /^((?!\.global).)*\.scss/,
-          loaders: [
-            'style-loader',
-            'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[hash:base64:15]',
-            'sass-loader',
-            'sass-resources-loader',
-            'postcss-loader',
-          ]
+          loaders: main.extract({
+            fallbackLoader: 'style-loader',
+            loader: [
+              'css-loader?modules&minimize&importLoaders=1&localIdentName=[hash:base64:15]',
+              'sass-loader',
+              'sass-resources-loader',
+              'postcss-loader',
+            ]
+          })
         },
         {
           test: /\.jpe?g$|\.gif$|\.png$|\.ico$|\.svg$/,
@@ -58,13 +65,18 @@ export default {
     },
     output: {
         path: path.resolve('./build/assets/'),
-        filename: 'bundle.js',
+        filename: 'bundle.min.js',
         publicPath: '/assets/',
     },
     plugins: [
+      vendor,
+      main,
       new HTMLwebpackPlugin({
         filename: '../index.html',
         template: './app/views/index.ejs',
+      }),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: { warnings: false }
       }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin(),
