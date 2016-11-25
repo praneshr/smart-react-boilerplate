@@ -3,7 +3,7 @@ import { createState } from './utils'
 import { handleActions } from 'redux-actions'
 
 const initialState = {
-  sample: 'rtsjdhfvjshdv',
+  sample: 'sample',
 }
 
 const reducer = handleActions({
