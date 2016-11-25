@@ -1,0 +1,7 @@
+@import "variables.scss";
+@import "colors.scss";
+@import "./bootstrap/index.scss";
+
+body{
+  background-color: $blueGrey50;
+}
