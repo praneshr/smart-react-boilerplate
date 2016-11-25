@@ -1,19 +1,16 @@
 import React, { Component, PropTypes } from 'react'
-import reactStyles from 'react-css-modules'
 
+import { allowMultiple } from '../../utils'
+import reactStyles from 'react-css-modules'
 import style from './style'
 
-@reactStyles(style)
+@reactStyles(style, allowMultiple)
 export default class Sample extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <div styleName="header">
-        content is too long
+        <h1>React</h1>
       </div>
-    );
+    )
   }
 }
