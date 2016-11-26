@@ -1,19 +1,23 @@
 import HTMLwebpackPlugin from 'html-webpack-plugin'
 import autoprefixer from 'autoprefixer'
-import cwp from 'clean-webpack-plugin'
+import CWP from 'clean-webpack-plugin'
 import path from 'path'
 import webpack from 'webpack'
 
 const entries = [
+  'babel-polyfill',
   'react-hot-loader/patch',
   'webpack-hot-middleware/client',
-  './app/',
+  './app/index.jsx',
 ]
 
 export default {
   browser: {
     entry: entries,
     resolve: {
+      alias: {
+        'bootstrap-global': path.resolve(__dirname, '../../app/globals/styles/bootstrap/index.scss'),
+      },
       extensions: ['.webpack.js', '.web.js', '.js', '.jsx', '.scss', '.html', '.ejs'],
     },
     node: {
@@ -29,7 +33,7 @@ export default {
             'sass-loader?sourceMap',
             'sass-resources-loader',
             'postcss-loader',
-          ]
+          ],
         },
         {
           test: /^((?!\.global).)*\.scss/,
@@ -39,7 +43,7 @@ export default {
             'sass-loader',
             'sass-resources-loader',
             'postcss-loader',
-          ]
+          ],
         },
         {
           test: /\.jpe?g$|\.gif$|\.png$|\.ico$|\.svg$/,
@@ -53,13 +57,13 @@ export default {
           test: /\.jsx?$/,
           loader: 'babel-loader',
           exclude: /node_modules/,
-        }
+        },
       ],
     },
     output: {
-        path: path.resolve('./build/assets/'),
-        filename: 'bundle.js',
-        publicPath: '/assets/',
+      path: path.resolve('./build/assets/'),
+      filename: 'bundle.js',
+      publicPath: '/assets/',
     },
     plugins: [
       new HTMLwebpackPlugin({
@@ -80,7 +84,7 @@ export default {
           context: path.resolve(__dirname, '../../'),
         },
       }),
-      new cwp(['build'], {
+      new CWP(['build'], {
         root: path.resolve(__dirname, '../../'),
       }),
     ],
@@ -110,7 +114,7 @@ export default {
       libraryTarget: 'commonjs2',
     },
     plugins: [
-      new cwp(['server.js'], {
+      new CWP(['server.js'], {
         root: path.resolve(__dirname, '../../'),
       }),
     ],
