@@ -1,11 +1,19 @@
-import React, { Component, PropTypes } from 'react'
+// @flow
+
+import React from 'react'
 
 import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom'
 import Router from './router'
-import easyBind from 'react-easy-bind'
 import store from './store'
+
+/* This imports bootstrap globally.*/
+
+import './globals/styles/index.global.scss'
+
+/* By default, Bootstrap won't work with CSS modules. If you want to make it work with
+CSS modules see './layout/index 2:1' */
 
 const DefaultStore = store()
 
@@ -15,20 +23,21 @@ const renderIntoDOM = (Router) => {
   ReactDOM.render(
     <Provider store={DefaultStore}>
       <AppContainer>
-        <Router/>
+        <Router />
       </AppContainer>
     </Provider>,
     renderNode
   )
 }
 
-const renderPage = (data) => {
-  if (module.hot)
-    module.hot.accept('./router.js', () => {
-      const NextRouter = require('./router').default
-      ReactDOM.unmountComponentAtNode(renderNode)
+const renderPage = () => {
+  if (module.hot) {
+    module.hot.accept('./router.jsx', () => {
+      /* eslint global-require: 0 */
+      const NextRouter = require('./router.jsx').default
       renderIntoDOM(NextRouter)
     })
+  }
   renderIntoDOM(Router)
 }
 

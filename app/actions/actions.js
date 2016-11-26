@@ -1,5 +1,5 @@
-import actionTypes from './_action-types'
 import { createAction } from 'redux-actions'
+import actionTypes from './_action-types'
 
 const sample = createAction(actionTypes.SAMPLE)
 

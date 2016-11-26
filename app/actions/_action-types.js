@@ -2,7 +2,9 @@ const actionTypes = [
   'SAMPLE',
 ]
 
-export default actionTypes.reduce((obj, str)=> {
-  obj[str] = str
-  return obj
+export default actionTypes.reduce((obj, str) => {
+  const mirror = {
+    [str]: str,
+  }
+  return { ...obj, ...mirror }
 }, {})

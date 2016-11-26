@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux'
+import thunk from 'redux-thunk'
 
 import reducers from '../reducers/'
-import thunk from 'redux-thunk'
 
 export default function configureStore() {
   const store = createStore(reducers, compose(
@@ -9,10 +9,11 @@ export default function configureStore() {
   ))
   if (module.hot) {
     module.hot.accept('../reducers/', () => {
+      /* eslint global-require: 0 */
       const nextRootReducer = require('../reducers').default
       store.replaceReducer(nextRootReducer)
     })
   }
 
-  return store;
+  return store
 }
