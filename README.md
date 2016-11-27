@@ -4,7 +4,7 @@
 <img src="logo.png"/></p>
 
 <p align="center">
-A future proof [React](https://facebook.github.io/react/) boilerplate with the world's most favorite frameworks pre-loaded.
+A future proof <a href="https://facebook.github.io/react/">React</a> boilerplate with the world's most favorite frameworks pre-loaded.
 </p>
 
 ## Features
@@ -39,5 +39,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 <p align="center">
-Made with ♥ by [Pranesh Ravi](https://github.com/praneshr)
+Made with ♥ by <a href="https://github.com/praneshr">Pranesh Ravi</a>
 </p>
