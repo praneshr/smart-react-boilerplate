@@ -11,18 +11,21 @@ import whm from 'webpack-hot-middleware'
 const webpackConfig = _.omit(config.webpack.browser, 'watch')
 const serverConfig = config.server
 const app = express()
-const compiler = webpack(webpackConfig)
+app.use(express.static(path.join(__dirname, 'build')))
+if (process.env.NODE_ENV !== 'production') {
+  const compiler = webpack(webpackConfig)
 
-app.use(wds(compiler, {
-  publicPath: webpackConfig.output.publicPath,
-}))
+  app.use(wds(compiler, {
+    publicPath: webpackConfig.output.publicPath,
+  }))
 
-app.use(whm(compiler))
+  app.use(whm(compiler))
+}
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 
-app.listen(serverConfig.port, (err) => {
+app.listen(serverConfig.port, () => {
   console.log(`Listening at http://localhost:${serverConfig.port}/`)
 })
