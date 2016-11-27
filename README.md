@@ -15,7 +15,7 @@ A future proof [React](https://facebook.github.io/react/) boilerplate with the w
 - Sass
 - React CSS Modules (CSS Modules)
 - ES6 and ES7
-- ** HOT RELOAD **
+- **HOT RELOAD**
 
 ## Setup
 ```bash
