@@ -1,16 +1,8 @@
 .header {
-  position: fixed;
-  top: 0;
-  height: 60px;
-  width: 100%;
-  background-color: $white;
-  box-shadow: $bs-1;
-  display: flex;
-  align-items: center;
-  h1{
-    margin: 0;
-  }
-  .random{
-    font-size: 20px;
+  .link {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    float: right;
   }
 }
