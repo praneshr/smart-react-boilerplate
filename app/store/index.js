@@ -7,7 +7,7 @@ export default function configureStore() {
   const store = createStore(reducers, compose(
     applyMiddleware(thunk),
   ))
-  if (module.hot) {
+  if (process.env.NODE_ENV !== 'production' && module.hot) {
     module.hot.accept('../reducers/', () => {
       /* eslint global-require: 0 */
       const nextRootReducer = require('../reducers').default
