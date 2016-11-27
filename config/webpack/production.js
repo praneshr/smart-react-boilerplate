@@ -1,27 +1,19 @@
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HTMLwebpackPlugin from 'html-webpack-plugin'
 import autoprefixer from 'autoprefixer'
-import cwp from 'clean-webpack-plugin'
+import CWP from 'clean-webpack-plugin'
 import path from 'path'
 import webpack from 'webpack'
 
 const entries = [
-  'react-hot-loader/patch',
-  'webpack-hot-middleware/client',
-  './app/',
+  'babel-polyfill',
+  './app/index.jsx',
 ]
-
 const vendor = new ExtractTextPlugin('vendor.min.css')
 const main = new ExtractTextPlugin('bundle.min.css')
 export default {
   browser: {
     entry: entries,
-    resolve: {
-      extensions: ['.webpack.js', '.web.js', '.js', '.jsx', '.scss', '.html', '.ejs'],
-    },
-    node: {
-      fs: 'empty',
-    },
     module: {
       rules: [
         {
@@ -33,7 +25,7 @@ export default {
               'sass-loader',
               'sass-resources-loader',
               'postcss-loader',
-            ]
+            ],
           }),
         },
         {
@@ -45,12 +37,12 @@ export default {
               'sass-loader',
               'sass-resources-loader',
               'postcss-loader',
-            ]
-          })
+            ],
+          }),
         },
         {
           test: /\.jpe?g$|\.gif$|\.png$|\.ico$|\.svg$/,
-          loader: 'file-loader?name=../img/[name].[ext]',
+          loader: 'file-loader',
         },
         {
           test: /\.(woff|woff2|eot|ttf)$/,
@@ -60,13 +52,13 @@ export default {
           test: /\.jsx?$/,
           loader: 'babel-loader',
           exclude: /node_modules/,
-        }
+        },
       ],
     },
     output: {
-        path: path.resolve('./build/assets/'),
-        filename: 'bundle.min.js',
-        publicPath: '/assets/',
+      path: path.resolve('./build/assets/'),
+      filename: 'bundle.min.js',
+      publicPath: '/assets/',
     },
     plugins: [
       vendor,
@@ -75,24 +67,33 @@ export default {
         filename: '../index.html',
         template: './app/views/index.ejs',
       }),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+        },
+      }),
       new webpack.optimize.UglifyJsPlugin({
-        compress: { warnings: false }
+        compress: { warnings: false },
       }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin(),
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+      }),
       new webpack.LoaderOptionsPlugin({
         options: {
           postcss: [
             autoprefixer(),
           ],
           sassResources: [
-            './app/globals/styles/_variables.scss',
             './app/globals/styles/_colors.scss',
+            './app/globals/styles/_variables.scss',
           ],
           context: path.resolve(__dirname, '../../'),
         },
       }),
-      new cwp(['build'], {
+      new CWP(['build'], {
         root: path.resolve(__dirname, '../../'),
       }),
     ],
@@ -122,8 +123,13 @@ export default {
       libraryTarget: 'commonjs2',
     },
     plugins: [
-      new cwp(['server.js'], {
+      new CWP(['server.js'], {
         root: path.resolve(__dirname, '../../'),
+      }),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+        },
       }),
     ],
   },

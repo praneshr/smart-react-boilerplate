@@ -1,6 +1,5 @@
 import HTMLwebpackPlugin from 'html-webpack-plugin'
 import autoprefixer from 'autoprefixer'
-import CWP from 'clean-webpack-plugin'
 import path from 'path'
 import webpack from 'webpack'
 
@@ -47,7 +46,7 @@ export default {
         },
         {
           test: /\.jpe?g$|\.gif$|\.png$|\.ico$|\.svg$/,
-          loader: 'file-loader?name=../img/[name].[ext]',
+          loader: 'file-loader',
         },
         {
           test: /\.(woff|woff2|eot|ttf)$/,
@@ -72,20 +71,21 @@ export default {
       }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin(),
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+      }),
       new webpack.LoaderOptionsPlugin({
         options: {
           postcss: [
             autoprefixer(),
           ],
           sassResources: [
-            './app/globals/styles/_variables.scss',
             './app/globals/styles/_colors.scss',
+            './app/globals/styles/_variables.scss',
           ],
           context: path.resolve(__dirname, '../../'),
         },
-      }),
-      new CWP(['build'], {
-        root: path.resolve(__dirname, '../../'),
       }),
     ],
   },
@@ -114,8 +114,10 @@ export default {
       libraryTarget: 'commonjs2',
     },
     plugins: [
-      new CWP(['server.js'], {
-        root: path.resolve(__dirname, '../../'),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+        },
       }),
     ],
   },
